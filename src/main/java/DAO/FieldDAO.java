@@ -1,9 +1,8 @@
 package DAO;
 
-import model.Field;
-import org.w3c.dom.Document;
-
 public interface FieldDAO {
-    public void insert(Field field);
-    public Field parse(Document document);
+    public void dropTable(String name);
+    public void createTable(String name);
+    public void fillTable(String tableName, String fieldName);
+
 }

@@ -3,8 +3,13 @@ package DAO;
 import model.Field;
 import model.Fields;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ConnectionUTIL {
     /**
@@ -54,7 +59,7 @@ public class ConnectionUTIL {
         this.password = password;
     }
 
-    public Fields preparedStatement(String sql) {
+    public Fields getFieldsFromDB(String sql) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         Fields fields = new Fields();
@@ -68,7 +73,7 @@ public class ConnectionUTIL {
             //Execute a query:
             preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 fields.addField(new Field(resultSet.getInt("FIELD")));
             }
 
@@ -91,4 +96,58 @@ public class ConnectionUTIL {
         }
         return fields;
     }
+
+    public void initializeTheDatabase(int n) {
+        Connection connection = null;
+        PreparedStatement dropCreateAndFillTable = null;
+        try {
+            //Register JDBC Driver:
+            Class.forName(jdbcDriver);
+
+            //Open a connection:
+            connection = DriverManager.getConnection(dbUrl, username, password);
+
+            //switch off autocommit
+            connection.setAutoCommit(false);
+
+            //execute a query:
+            dropCreateAndFillTable = connection.prepareStatement("DROP TABLE IF EXISTS TEST;");
+            dropCreateAndFillTable.execute();
+            dropCreateAndFillTable = connection.prepareStatement("CREATE TABLE TEST (FIELD int not null primary key);");
+            dropCreateAndFillTable.execute();
+            dropCreateAndFillTable = connection.prepareStatement("INSERT INTO `TEST` (`FIELD`) VALUES (?);");
+            for (int i = 1; i < n+1; i++) {
+                dropCreateAndFillTable.setInt(1, i);
+                dropCreateAndFillTable.addBatch();
+            }
+            dropCreateAndFillTable.executeBatch();
+
+            //commit
+            connection.commit();
+            //switch on autocommit
+            connection.setAutoCommit(true);
+
+
+            //handle errors:
+        } catch (SQLException sqle) {
+            System.err.println("JDBC error: " + sqle);
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("Class.forName error: " + cnfe);
+        } finally {
+            //close resources:
+            try {
+                if (dropCreateAndFillTable != null) dropCreateAndFillTable.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
 }
