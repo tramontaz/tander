@@ -33,6 +33,7 @@ public class XMLReader {
 
             //get all nodes with name "entry":
             NodeList nodeList = doc.getElementsByTagName("entry");
+//            System.out.println("nodelist length: " + nodeList.getLength());
 
             //add all attribute values ​​of the node:
             for (int i = 0; i < nodeList.getLength(); i++) {

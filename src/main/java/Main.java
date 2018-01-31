@@ -20,7 +20,7 @@ public class Main {
         xmlConverter.convertXML("src/main/resources/converter.xls", "src/main/resources/1.xml", "src/main/resources/2.xml");
 
         XMLReader xmlReader = new XMLReader();
-        xmlReader.readXmlFile("src/main/resources/2.xml");
+        xmlReader.readXmlFileAndReturnSumOfAttribute("src/main/resources/2.xml");
 
 
     }
