@@ -25,6 +25,7 @@ public class ConnectionUTIL {
         this.jdbcDriver = jdbcDriver;
         this.username = username;
         this.password = password;
+        System.out.println("The connection successful created.");
     }
 
     public String getDbUrl() {
@@ -116,7 +117,7 @@ public class ConnectionUTIL {
             dropCreateAndFillTable = connection.prepareStatement("CREATE TABLE TEST (FIELD int not null primary key);");
             dropCreateAndFillTable.execute();
             dropCreateAndFillTable = connection.prepareStatement("INSERT INTO `TEST` (`FIELD`) VALUES (?);");
-            for (int i = 1; i < n+1; i++) {
+            for (int i = 1; i <= n; i++) {
                 dropCreateAndFillTable.setInt(1, i);
                 dropCreateAndFillTable.addBatch();
             }
@@ -126,6 +127,8 @@ public class ConnectionUTIL {
             connection.commit();
             //switch on autocommit
             connection.setAutoCommit(true);
+
+            System.out.println("Database successful initialised.");
 
 
             //handle errors:

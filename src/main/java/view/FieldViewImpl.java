@@ -9,16 +9,15 @@ public class FieldViewImpl implements FieldView {
     private String jdbcDriver = "com.mysql.jdbc.Driver";
     private String databaseUsername = "tander";
     private String databasePassword = "%I@mT@nder_";
-    private int n = 1000000;
+    private int n = 100;
 
     public void action() {
 //        fillConnectionData();
         ConnectionUTIL connectionUTIL = new ConnectionUTIL(dbURL, jdbcDriver, databaseUsername, databasePassword);
 
         connectionUTIL.initializeTheDatabase(n);
-        Fields fields = connectionUTIL.getFieldsFromDB("SELECT * FROM tander.TEST;");
 
         JaxbWorker jaxbWorker = new JaxbWorker();
-        jaxbWorker.convertCollectionToXML(fields, "1.xml");
+        jaxbWorker.convertCollectionToXML(connectionUTIL.getFieldsFromDB("SELECT * FROM tander.TEST;"), "1.xml");
     }
 }
