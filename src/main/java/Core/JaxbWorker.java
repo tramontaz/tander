@@ -1,4 +1,4 @@
-package DAO;
+package Core;
 
 import model.Field;
 

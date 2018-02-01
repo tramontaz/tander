@@ -1,4 +1,4 @@
-package DAO;
+package Core;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -9,7 +9,7 @@ import javax.xml.transform.stream.StreamSource;
 
 public class XMLConverter {
     private TransformerFactory tf;
-    Transformer transformer;
+    private Transformer transformer;
 
     public XMLConverter() {
     }

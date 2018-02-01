@@ -1,15 +1,15 @@
-package view.test;
+package tests;
 
-import DAO.ConnectionUTIL;
-import DAO.JaxbWorker;
-import DAO.XMLConverter;
-import DAO.XMLReader;
+import Core.ConnectionUTIL;
+import Core.JaxbWorker;
+import Core.XMLConverter;
+import Core.XMLReader;
 
-public class XMLConverterTest {
+public class MainTest {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        String dbURL = "jdbc:mysql://localhost/tander";
+        String dbURL = "jdbc:mysql://lockalhost/tander";
         String jdbcDriver = "com.mysql.jdbc.Driver";
         String databaseUsername = "tander";
         String databasePassword = "%I@mT@nder_";

@@ -1,4 +1,4 @@
-package DAO;
+package Core;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,12 +16,12 @@ public class XMLReader {
     private DocumentBuilderFactory dbf = null;
     private DocumentBuilder docBuilder = null;
     private Document doc = null;
-    private int sum = 0;
+    private long sum = 0;
 
     public XMLReader() {
     }
 
-    public int readXmlFileAndReturnSumOfAttribute(String pathname){
+    public long readXmlFileAndReturnSumOfAttribute(String pathname){
         //building object model of XML file:
         try {
             dbf = DocumentBuilderFactory.newInstance();
